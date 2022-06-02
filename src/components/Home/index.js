@@ -3,6 +3,7 @@ import Search from "../Search";
 import dataPromise from "../../services/dataPromise";
 import Input from "../Input";
 import FormCandidato from "../FormCandidato";
+import Login from "../../pages/Login";
 
 const Home = () => {
   const [search, setSearch] = useState([]);
@@ -16,11 +17,14 @@ const Home = () => {
   }, []);
 
   return (
-      <div>
-        <Input />
-        <Search items={search}/>
-        <FormCandidato />
-      </div>
+      // <div>
+      //   <Input />
+      //   <Search items={search}/>
+      //   <FormCandidato />
+      // </div>
+      <>
+        <Login/>
+      </>
   );
 }
 

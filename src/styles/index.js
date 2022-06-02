@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  height: 645px;
+  width: 380px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -9,9 +11,9 @@ export const Container = styled.div`
 `;
 
 export const Input = styled.input`
-  padding: 5px;
+  border: 1px solid gainsboro;
+  padding: 10px;
   outline: none;
-  border: 1px solid white;
   border-radius: 5px;
   
   :focus {
@@ -26,6 +28,9 @@ export const Label = styled.div`
 `;
 
 export const Button = styled.button`
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
   padding: 8px;
   outline: none;
   border: 1px solid white;
@@ -42,7 +47,8 @@ export const Button = styled.button`
 `;
 
 export const InputSection = styled.div`
-
+  display: flex;
+  flex-direction: column;
 `;
 
 export const Overlay = styled.div`
@@ -53,6 +59,8 @@ export const Overlay = styled.div`
 `;
 
 export const Content = styled.div`
+  height: 645px;
+  width: 380px;
   position: absolute;
   right: 50%;
   top: 50%;
@@ -62,9 +70,10 @@ export const Content = styled.div`
 `;
 
 export const Box = styled.div`
+  gap: 20px;
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 40px;
   padding: 96px;
 `;
 
@@ -75,11 +84,23 @@ export const Text = styled.div`
 `;
 
 export const Select = styled.select`
-  padding: 20px;
   border: 1px solid gainsboro;
+  padding: 10px;
   border-radius: 5px;
   
   :focus {
     outline: none;
   }
+`;
+
+export const Wrapper = styled.div`
+  display: flex;
+`;
+
+export const RowSection = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Row = styled.div`
 `;

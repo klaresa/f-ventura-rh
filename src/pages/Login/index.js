@@ -1,31 +1,67 @@
-import React, {useEffect, useState} from "react";
-import {Overlay, Content, Box, Select, Text, Button} from "../../styles";
+import React, { useState } from "react";
+import {
+  Overlay,
+  Content,
+  Box,
+  Text,
+  Button,
+  Label,
+  Input,
+  InputSection
+} from "../../styles";
+
+import { sendData } from "../../services/sendData";
 
 const Login = () => {
-  const [search, setSearch] = useState([]);
+  // const [search, setSearch] = useState([]);
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+
 
   // useEffect(() => {
-  //   async function get() {
-  //     const search = await dataPromise('http://localhost:3000/vagas');
+//   async function get() {
+  //     const search = await sendData('http://localhost:3000/login');
   //     setSearch(search);
   //   }
   //   get();
   // }, []);
+  async function handleFormSubmit() {
+    console.log('🚀', email)
+    console.log('🚀', senha)
+
+    const request = await sendData('http://localhost:3000/login', {
+      username: email,
+      password: senha
+    });
+    console.log('🚀', request)
+  }
 
   return (
       <Overlay>
         <Content>
           <Box>
-            <Text>Entrar</Text>
-            <Select>
-              <option>Candidato</option>
-              <option>Empresa</option>
-            </Select>
-            <Button>Ir</Button>
+            <Text>login</Text>
+            <InputSection>
+              <Label>email</Label>
+              <Input
+                  id="email"
+                  name="email"
+                  placeholder="email.."
+                  onChange={(e) => setEmail(e.target.value)}
+              />
+            </InputSection>
+            <InputSection>
+              <Label>senha</Label>
+              <Input
+                  id="senha"
+                  name="senha"
+                  placeholder="senha.."
+                  onChange={(e) => setSenha(e.target.value)}
+              />
+            </InputSection>
+            <Button onClick={handleFormSubmit}>Ir</Button>
           </Box>
-
         </Content>
-
       </Overlay>
   );
 }
