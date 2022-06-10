@@ -1,29 +1,46 @@
-import React, {useEffect, useState} from "react";
-import Search from "../Search";
-import dataPromise from "../../services/dataPromise";
-import Input from "../Input";
-import FormCandidato from "../FormCandidato";
+import React, { useState } from "react";
+import ComponenteVagas from "../ComponenteVagas";
 import Login from "../../pages/Login";
+import api from "../../config/api";
 
 const Home = () => {
-  const [search, setSearch] = useState([]);
+  const [data, setData] = useState([]);
 
-  useEffect(() => {
-    async function get() {
-      const search = await dataPromise('http://localhost:3000/vagas');
-      setSearch(search);
+  const [user, setUser] = useState(false);
+
+  async function get() {
+    const token = localStorage.getItem('token');
+
+    const headers = {
+      'headers': {
+        'Authorization': `Bearer ${(token)}`,
+      }
     }
-    get();
-  }, []);
+
+    const request = await api.get(
+        '/vagas',
+        headers)
+        .then(res => res)
+        .catch(er => er);
+    setData(request.data);
+  }
+
+  const handleLogin = () => {
+    setUser(true);
+  }
 
   return (
-      // <div>
-      //   <Input />
-      //   <Search items={search}/>
-      //   <FormCandidato />
-      // </div>
       <>
-        <Login/>
+        {!user && (
+            <>
+              <Login login={handleLogin} />
+            </>
+            )
+        }
+        {user && (
+            <ComponenteVagas data={data} />
+        )}
+        <button onClick={get}>ok</button>
       </>
   );
 }

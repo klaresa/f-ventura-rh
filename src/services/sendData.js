@@ -1,7 +1,5 @@
-import axios from "axios";
+import api from "../config/api";
 
-export function sendData(url, data) {
-  axios.post(url, data)
-      .then(res => res)
-      .catch(err => err);
+export async function sendData(url, data) {
+  return await api.post(url, data).then(res => res);
 }

@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {Overlay, Content, Box, Text, Button, Input, InputSection, Label, Select, Wrapper} from "../../styles";
+import React, {useState} from "react";
+import { Overlay, Content, Box, Text, Button, Input, InputSection, Label, Select, Wrapper} from "../../styles";
 import { sendData } from "../../services/sendData";
 import { useNavigate } from "react-router-dom";
 
@@ -41,7 +41,15 @@ const Cadastro = () => {
 
     if (step === 2) {
       // se a senha e a confirmacao foram iguais ok
+      if (!(senha === confirmacao)) {
+        setStep(1)
+        return;
+      }
+
       const data = {
+        type: perfil,
+        username: email,
+        password: senha,
         nome,
         contato: {
           endereco,
@@ -50,7 +58,7 @@ const Cadastro = () => {
       }
       sendData(`http://localhost:3000/${perfil}s`, data);
 
-      navigate('/cadastro/all');
+      // navigate('/cadastro/all');
       // se nao n deixa
     }
   }
@@ -165,7 +173,8 @@ const Cadastro = () => {
                             id="cnpj"
                             name="cnpj"
                             placeholder="cnpj.."
-                            onChange={(e) => setCnpj(e.target.value)}
+                            onChange={(e) => setCnpj
+                            (e.target.value)}
                         />
                       </InputSection>
                   )}

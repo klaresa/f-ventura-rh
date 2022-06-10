@@ -7,7 +7,7 @@ import {
 } from "../../styles";
 import dataPromise from "../../services/dataPromise";
 
-const Cadastro = () => {
+const VagasCadastradas = () => {
   const [search, setSearch] = useState([]);
 
   const [data, setData] = useState([]);
@@ -27,7 +27,7 @@ const Cadastro = () => {
   return (
       <>
         <Box>
-          <Text>cadastrados</Text>
+          <Text>vagas</Text>
           {
             data.map((item, index) => (
                 <RowSection>
@@ -43,4 +43,4 @@ const Cadastro = () => {
   );
 }
 
-export default Cadastro;
+export default VagasCadastradas;

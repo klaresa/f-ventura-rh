@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Overlay,
   Content,
@@ -9,31 +10,21 @@ import {
   Input,
   InputSection
 } from "../../styles";
+import { AuthContext } from "../../auth/AuthContext";
 
-import { sendData } from "../../services/sendData";
-
-const Login = () => {
-  // const [search, setSearch] = useState([]);
+const Login = ({ login }) => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
+  const navigate = useNavigate();
+  const { handleLogout, getUserPermission, handleLogin } = useContext(AuthContext);
 
-  // useEffect(() => {
-//   async function get() {
-  //     const search = await sendData('http://localhost:3000/login');
-  //     setSearch(search);
-  //   }
-  //   get();
-  // }, []);
-  async function handleFormSubmit() {
-    console.log('🚀', email)
-    console.log('🚀', senha)
+  useEffect(() => {
 
-    const request = await sendData('http://localhost:3000/login', {
-      username: email,
-      password: senha
-    });
-    console.log('🚀', request)
+  }, [getUserPermission]);
+
+  async function handleLoginData() {
+    await handleLogin({ username: email, password: senha});
   }
 
   return (
@@ -41,6 +32,7 @@ const Login = () => {
         <Content>
           <Box>
             <Text>login</Text>
+            {getUserPermission.toString()}
             <InputSection>
               <Label>email</Label>
               <Input
@@ -59,7 +51,9 @@ const Login = () => {
                   onChange={(e) => setSenha(e.target.value)}
               />
             </InputSection>
-            <Button onClick={handleFormSubmit}>Ir</Button>
+            <Button onClick={handleLoginData}>Ir</Button>
+            <button onClick={handleLogout}>sair</button>
+
           </Box>
         </Content>
       </Overlay>

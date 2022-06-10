@@ -53,7 +53,7 @@ export const InputSection = styled.div`
 
 export const Overlay = styled.div`
   position: fixed;
-  background-color: #e5e5e5;
+  background-color: #fafafa;
   width: 100%;
   height: 100%;
 `;
