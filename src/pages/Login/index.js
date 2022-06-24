@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Overlay,
@@ -13,18 +13,16 @@ import {
 import { AuthContext } from "../../auth/AuthContext";
 
 const Login = ({ login }) => {
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
+  const [email, setEmail] = useState('empresa');
+  const [senha, setSenha] = useState('1234');
 
   const navigate = useNavigate();
   const { handleLogout, getUserPermission, handleLogin } = useContext(AuthContext);
 
-  useEffect(() => {
-
-  }, [getUserPermission]);
-
   async function handleLoginData() {
     await handleLogin({ username: email, password: senha});
+
+    (login());
   }
 
   return (
@@ -32,7 +30,7 @@ const Login = ({ login }) => {
         <Content>
           <Box>
             <Text>login</Text>
-            {getUserPermission.toString()}
+            {JSON.stringify(getUserPermission)}
             <InputSection>
               <Label>email</Label>
               <Input
@@ -53,7 +51,6 @@ const Login = ({ login }) => {
             </InputSection>
             <Button onClick={handleLoginData}>Ir</Button>
             <button onClick={handleLogout}>sair</button>
-
           </Box>
         </Content>
       </Overlay>

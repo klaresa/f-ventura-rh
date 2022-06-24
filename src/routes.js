@@ -8,37 +8,31 @@ import MeuPerfil from "./pages/Perfil";
 import Cadastro from "./pages/Cadastro";
 import Home from "./components/Home";
 
-import ComponenteVagas from "./components/ComponenteVagas";
 import EmpresasCadastradas from "./pages/EmpresasCadastradas";
 import CandidatosCadastrados from "./pages/CandidatosCadastrados";
+import VagasCadastradas from "./pages/VagasCadastradas";
+import AdicionarVagasComponente from "./pages/AdicionarVagas/AdicionarVagasComponente";
 
 export const MyRoutes = () => {
-  const { getUserPermission } = useContext(AuthContext);
-
-  const candidato = getUserPermission.type === 'candidato';
-  const empresa = getUserPermission.type === 'empresa';
-  const unauthorized = getUserPermission.type === 'unauthorized';
 
   return (
       <Routes>
-        <Route candidato path="/c/" element={<Home/>} />
-        <Route candidato exact path="/c/perfil" element={<MeuPerfil data={[]}/>}/>
-        <Route candidato exact path="/c/vagas" element={<ComponenteVagas data={[]}/>} />
+        <Route candidato path="/c/" element={<p>...</p>} />
+        <Route candidato exact path="/c/perfil" element={<MeuPerfil />}/>
+        <Route candidato exact path="/c/vagas" element={<VagasCadastradas data={[]}/>} />
         <Route candidato exact path="/c/empresas" element={<EmpresasCadastradas/>}/>
 
-        <Route empresa path="/e/" element={<Home/>}/>
-        <Route empresa exact path="/e/perfil" element={<MeuPerfil data={[]}/>}/>
+        <Route empresa path="/e/" element={<p>...</p>}/>
+        <Route empresa exact path="/e/perfil" element={<MeuPerfil />}/>
+        <Route empresa exact path="/e/vagas" element={<AdicionarVagasComponente />}/>
+
         <Route empresa exact path="/e/candidatos" element={<CandidatosCadastrados data={[]}/>}/>
 
-        {/*LOGIN SOZINHO N VAI CHAMAR A FUNCAO LOGIN PQ ELE RECEBE DO HOME*/}
         <Route path="/login" element={<Login/>}/>
         <Route path="/cadastro" element={<Cadastro/>}/>
 
         <Route exact path="/" element={<Index />} />
-        <Route path="*" element={<p>404</p>} />
-
+        <Route path="*" element={<p>Página não encontrada - 404</p>} />
       </Routes>
   )
 }
-
-// export default MyRoutes;

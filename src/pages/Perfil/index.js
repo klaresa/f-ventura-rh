@@ -1,19 +1,26 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {
+  useContext,
+  useEffect,
+  useState
+} from "react";
 import {
-  Box, Button,
+  Box,
+  Button,
   Input,
   InputSection,
   Label,
-  Text, Wrapper,
+  Text,
+  Wrapper,
 } from "../../styles";
-import {getApiData} from "../../services/getApiData";
+import { getApiData } from "../../services/getApiData";
+import { updateData } from "../../services/updateData";
+
 import { AuthContext } from "../../auth/AuthContext";
-import api from '../../config/api';
 
 const MeuPerfil = () => {
+  const { getUserInfo } = useContext(AuthContext);
 
-  const { getUser } = useContext(AuthContext);
-  const [perfil, setPerfil] = useState('candidato');
+  const [perfil, _] = useState('candidato');
 
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -26,29 +33,37 @@ const MeuPerfil = () => {
   const [cpf, setCpf] = useState('');
   const [cnpj, setCnpj] = useState('');
 
-  const [userInfo, setUserInfo] = useState([]);
-
-  async function handleFetch() {
-    const data = await getApiData(`${perfil}s/${email}`);
-    setUserInfo(data);
-  }
+  // async function handleFetch() {
+  //   const data = await getApiData(`${perfil}s/${email}/${getUserInfo.email}`);
+  //   console.log('data ---', data);
+  // }
 
   useEffect(() => {
-    handleFetch()
-  }, []);
+    // handleFetch()
+  }, [getUserInfo]);
+
+  async function handleUserInfoUpdate() {
+    if (senha === confirmacao) {
+      const data = {
+        id: getUserInfo.id,
+        type: perfil,
+        username: email,
+        password: senha,
+      }
+      await updateData(`http://localhost:3000/${perfil}s/${getUserInfo.id}`, data);
+    }
+  }
 
   async function handleUpdate() {
     const data = {
-      type: perfil,
-      username: email,
-      password: senha,
+      id: getUserInfo.id,
       nome,
       contato: {
-        endereco,
-        telefone
+        telefone,
+        endereco
       }
     }
-    // await api.get(`http://localhost:3000/${perfil}s/${}`, data);
+    await updateData(`http://localhost:3000/${perfil}s/${getUserInfo.id}`, data);
   }
 
   return (
@@ -82,6 +97,18 @@ const MeuPerfil = () => {
                   onChange={(e) => setConfirmacao(e.target.value)}
               />
             </InputSection>
+          <Wrapper>
+            <Button onClick={handleUserInfoUpdate}>update login</Button>
+          </Wrapper>
+          <InputSection>
+            <Label>nome</Label>
+            <Input
+                id="nome"
+                name="nome"
+                placeholder="nome.."
+                onChange={(e) => setNome(e.target.value)}
+            />
+          </InputSection>
           <InputSection>
             <Label>endereco</Label>
             <Input
@@ -100,7 +127,7 @@ const MeuPerfil = () => {
                 onChange={(e) => setTelefone(e.target.value)}
             />
           </InputSection>
-          {getUser === 'candidato' ? (
+          {getUserInfo.type === 'candidato' ? (
               <InputSection>
                 <Label>cpf</Label>
                 <Input
@@ -123,7 +150,7 @@ const MeuPerfil = () => {
               </InputSection>
               )}
               <Wrapper>
-                <Button onClick={handleUpdate}>update</Button>
+                <Button onClick={handleUpdate}>update info</Button>
               </Wrapper>
         </Box>
       </>

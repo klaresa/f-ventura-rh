@@ -37,13 +37,23 @@ const ComponenteVagas = ({ data }) => {
           {data.map((item, itemIndex) => (
               <RowSection key={`item_${itemIndex}`}>
                 <Row>
-                  <div key={`req_descricao_${itemIndex}`}>
-                    {item.nome} {item.status ? (<Icon />) : (<Icon />)}
+                  <div key={`empresa_${itemIndex}`}>
+                    {item.empresa.nome} {item.status ? (<Icon />) : (<Icon />)}
                   </div>
                 </Row>
                 <Row>
+                  <div key={`req_descricao_${itemIndex}`}>
+                    {item.nome}
+                  </div>
+                </Row>
+                {/*<Row>*/}
+                {/*  {item.habilidades.requisitos.map((requisito, reqIndex) => (*/}
+                {/*      <div key={`req_nome_${reqIndex}`}>{requisito.nome} - {requisito.pontuacao}</div>*/}
+                {/*    ))}*/}
+                {/*</Row>*/}
+                <Row>
                   {item.habilidades.requisitos.map((requisito, reqIndex) => (
-                      <div key={`req_nome_${reqIndex}`}>{requisito.nome} - {requisito.pontuacao}</div>
+                      <div key={`req_nome_${reqIndex}`}>{requisito.nome}</div>
                     ))}
                 </Row>
               </RowSection>
