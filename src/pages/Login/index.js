@@ -13,8 +13,8 @@ import {
 import { AuthContext } from "../../auth/AuthContext";
 
 const Login = ({ login }) => {
-  const [email, setEmail] = useState('empresa');
-  const [senha, setSenha] = useState('1234');
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
 
   const navigate = useNavigate();
   const { handleLogout, getUserPermission, handleLogin } = useContext(AuthContext);
@@ -30,7 +30,6 @@ const Login = ({ login }) => {
         <Content>
           <Box>
             <Text>login</Text>
-            {JSON.stringify(getUserPermission)}
             <InputSection>
               <Label>email</Label>
               <Input

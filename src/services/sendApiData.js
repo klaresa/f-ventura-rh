@@ -1,7 +1,6 @@
 import api from "../config/api";
 
 export async function sendApiData(url, data) {
-  // const token = localStorage.getItem('token');
   const token = localStorage.getItem('token');
   const parse = JSON.parse(token);
 

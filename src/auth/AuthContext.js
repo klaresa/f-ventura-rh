@@ -1,10 +1,12 @@
 import React, { createContext, useEffect, useState } from 'react';
 import api from "../config/api";
 import {sendData} from "../services/sendData";
+import {useNavigate} from "react-router-dom";
 
 export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
+  const navigate = useNavigate();
 
   const [getUserInfo, setUserInfo] = useState({ type: 'unauthorized' });
 
@@ -15,6 +17,7 @@ export const AuthProvider = ({ children }) => {
     setUserInfo({ type: 'unauthorized'});
     localStorage.removeItem('token');
     api.defaults.headers.Authorization = undefined;
+    navigate('/');
   }
 
   async function handleLogin(data) {
@@ -28,6 +31,8 @@ export const AuthProvider = ({ children }) => {
         setUserInfo({ id: request.data.id, type: request.data.type });
         setUserPermission(request.data.type);
         localStorage.setItem('token', JSON.stringify({ id, type, access_token }));
+        // navigate('/');
+
         return request;
       }
     } catch (err) {
@@ -74,11 +79,9 @@ export const AuthProvider = ({ children }) => {
 
       }
       if (parsed) setUserPermission(parsed.type);
-      // console.log('parsed',parsed)
 
     })();
 
-    // login();
   }, []);
 
   return (
