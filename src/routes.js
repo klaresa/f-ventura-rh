@@ -6,12 +6,12 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import MeuPerfil from "./pages/Perfil";
 import Cadastro from "./pages/Cadastro";
-import Home from "./components/Home";
 
 import EmpresasCadastradas from "./pages/EmpresasCadastradas";
 import CandidatosCadastrados from "./pages/CandidatosCadastrados";
 import VagasCadastradas from "./pages/VagasCadastradas";
 import AdicionarVagasComponente from "./pages/AdicionarVagas/AdicionarVagasComponente";
+import DetalhesVagas from "./pages/DetalhesVagas";
 
 export const MyRoutes = () => {
 
@@ -21,6 +21,9 @@ export const MyRoutes = () => {
         <Route candidato exact path="/c/perfil" element={<MeuPerfil />}/>
         <Route candidato exact path="/c/vagas" element={<VagasCadastradas data={[]}/>} />
         <Route candidato exact path="/c/empresas" element={<EmpresasCadastradas/>}/>
+
+        <Route candidato exact path="/c/vagas/details/:id" element={<DetalhesVagas vaga={[]}/>} />
+
 
         <Route empresa path="/e/" element={<p>...</p>}/>
         <Route empresa exact path="/e/perfil" element={<MeuPerfil />}/>

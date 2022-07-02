@@ -13,7 +13,7 @@ import {
 import { getApiData } from "../../services/getApiData";
 import { sendApiData } from "../../services/sendApiData";
 
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AdicionarVagasComponente = () => {
   const _id = localStorage.getItem('token');
@@ -58,7 +58,7 @@ const AdicionarVagasComponente = () => {
       habilidades: {
         requisitos: [
           {
-            nome: requisito, potuacao: pontuacao
+            nome: requisito, pontuacao: pontuacao
           }
         ]
       }

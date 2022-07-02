@@ -9,13 +9,20 @@ import {
   Input,
   InputSection,
 } from "./styles";
+import { useNavigate } from "react-router-dom";
 
 const ComponenteVagas = ({ data }) => {
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     if (e.code === 'Enter') {
       console.log('code', e.code)
     }
+  }
+
+  function handleDetailsClick(item) {
+    // console.log('itemmm', item);
+    navigate(`details/${item._id}`, { state: item });
   }
 
   return data && (
@@ -35,7 +42,10 @@ const ComponenteVagas = ({ data }) => {
           </Row>
 
           {data.map((item, itemIndex) => (
-              <RowSection key={`item_${itemIndex}`}>
+              <RowSection
+                  key={item._id}
+                  onClick={() => handleDetailsClick(item)}
+              >
                 <Row>
                   <div key={`empresa_${itemIndex}`}>
                     {item.empresa.nome} {item.status ? (<Icon />) : (<Icon />)}
