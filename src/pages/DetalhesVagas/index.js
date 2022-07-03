@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import { useParams } from "react-router-dom";
+import React, {useContext, useEffect, useState} from "react";
+import {useNavigate, useParams} from "react-router-dom";
 import { useLocation } from "react-router";
 import {
   Box,
@@ -9,25 +9,46 @@ import {
 } from "./styles";
 import { Button, Input, InputSection, Label, Wrapper } from "../../styles";
 import { sendApiData } from "../../services/sendApiData";
+import {AuthContext} from "../../auth/AuthContext";
+import fetchData from "../../services/fetchData";
+import {getApiData} from "../../services/getApiData";
 
 export const DetalhesVagas = (props) => {
+
+  const { getUserInfo } = useContext(AuthContext);
+
+  console.log('user', getUserInfo);
+
+  const [userData, setUserInfo] = useState('');
 
   const { id } = useParams();
   const { state } = useLocation();
   const { _id, nome, descricao, empresa, habilidades, status } = state;
 
+  const navigate = useNavigate();
+
   const [visible, setVisibility] = useState(false);
   const [requisito, setRequisito] = useState(false);
+
+  async function handleFetch() {
+    return await getApiData(`candidatos/find-by-userId/${getUserInfo.id}`);
+  }
+
+  useEffect(() => {
+        (async () => {
+          const request = await handleFetch();
+          console.log('user data', request);
+          setUserInfo(request);
+        })();
+      }, []
+  );
 
   async function handleSubmit() {
     const data = {
       candidato: {
-        userId: '',
-        nome: '',
-        contato: {
-          telefone: '',
-          endereco: '',
-        }
+        userId: userData.userId,
+        nome: userData.nome,
+        contato: userData.contato
       },
       vaga: {
         nome,
@@ -36,13 +57,15 @@ export const DetalhesVagas = (props) => {
         empresa,
         habilidades,
       },
-      pontuacao: [
-        {
-          nome: requisito, pontuacao: pontuacao
-        }
-      ]
+      habilidades: {
+        pontuacao: [
+          {
+            nome: 'javascript', pontuacao: 10
+          }
+        ]
+      }
     }
-    await sendApiData(`vagas`, data);
+    await sendApiData(`respostas`, data);
     navigate('/e/');
   }
 
@@ -79,7 +102,7 @@ export const DetalhesVagas = (props) => {
         {visible && (
             <Box>
               {habilidades.requisitos.map((item, index) => (
-                  <InputSection>
+                  <InputSection key={`requisitos_${index}`}>
                     <Label>{item.nome}</Label>
                     <Input
                         type="number"
