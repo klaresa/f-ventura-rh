@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from "react";
-import {Wrapper, Path, Content} from './styles';
+import {Wrapper, Path, Content} from "./styles";
 import {Link} from "react-router-dom";
 import {AuthContext} from "../../auth/AuthContext";
 
@@ -8,7 +8,7 @@ export const NavBar = () => {
 
   useEffect(() => {
 
-  }, [getUserPermission, getUserInfo])
+  }, [getUserPermission, getUserInfo]);
 
   const routes = [
     {
@@ -38,28 +38,28 @@ export const NavBar = () => {
   ];
 
   return (
-      <Wrapper>
-        <Content>
-          { getUserPermission === '' ? (
-              <Path>deslogado</Path>
-          ) : (
-              <Path><a onClick={handleLogout}>sair</a></Path>
-          )}
-        </Content>
-        <Content>
-          {routes.map((route, index) => (
-              route.paths.map((pat, indPath) => {
-                if (getUserPermission === route.profile) {
-                  console.log('getuserinfo',getUserInfo.type)
-                  return (
-                      <Path key={`path_${indPath}`}>
-                        <Link to={pat.path}>{pat.description}</Link>
-                      </Path>
-                  )
-                }
-              })
-          ))}
-        </Content>
-      </Wrapper>
+    <Wrapper>
+      <Content>
+        { getUserPermission === "" ? (
+          <Path>deslogado</Path>
+        ) : (
+          <Path><a onClick={handleLogout}>sair</a></Path>
+        )}
+      </Content>
+      <Content>
+        {routes.map((route, index) => (
+          route.paths.map((pat, indPath) => {
+            if (getUserPermission === route.profile) {
+              console.log("getuserinfo",getUserInfo.type);
+              return (
+                <Path key={`path_${indPath}`}>
+                  <Link to={pat.path}>{pat.description}</Link>
+                </Path>
+              );
+            }
+          })
+        ))}
+      </Content>
+    </Wrapper>
   );
-}
+};

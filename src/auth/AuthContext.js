@@ -1,92 +1,81 @@
-import React, { createContext, useEffect, useState } from 'react';
-import api from "../config/api";
-import {sendData} from "../services/sendData";
-import {useNavigate} from "react-router-dom";
+import React, {createContext, useEffect, useState} from 'react';
+import api from '../config/api';
+import {sendData} from '../services/sendData';
+import {useNavigate} from 'react-router-dom';
+import {getTokenHeaders, removeToken, getTokenData, setToken } from '../services/token-service';
 
 export const AuthContext = createContext(null);
 
-export const AuthProvider = ({ children }) => {
-  const navigate = useNavigate();
+export const AuthProvider = ({children}) => {
+	const navigate = useNavigate();
 
-  const [getUserInfo, setUserInfo] = useState({ type: 'unauthorized' });
+	const [getUserInfo, setUserInfo] = useState({type: 'unauthorized'});
 
-  const [getUserPermission, setUserPermission] = useState('');
+	const [getUserPermission, setUserPermission] = useState('');
 
-  function handleLogout() {
-    setUserPermission('');
-    setUserInfo({ type: 'unauthorized'});
-    localStorage.removeItem('token');
-    api.defaults.headers.Authorization = undefined;
-    navigate('/');
-  }
+	function handleLogout() {
+		setUserPermission('');
+		setUserInfo({type: 'unauthorized'});
 
-  async function handleLogin(data) {
-    try {
-      const request = await api.post('/auth/local/signin', data);
+		removeToken();
 
-      if (request.data) {
+		navigate('/');
+	}
 
-        const { id, type, access_token } = request.data;
+	async function handleLogin(data) {
+		try {
+			const request = await api.post('/auth/local/signin', data);
 
-        setUserInfo({ id: request.data.id, type: request.data.type });
-        setUserPermission(request.data.type);
-        localStorage.setItem('token', JSON.stringify({ id, type, access_token }));
-        // navigate('/');
+			if (request.data) {
 
-        return request;
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  }
+				const {id, type, access_token} = request.data;
 
-  const validate = async () => {
-    console.log('passou aquiiiii2')
+				setUserInfo({id: request.data.id, type: request.data.type});
 
-    const token = localStorage.getItem('token');
-    const parse = JSON.parse(token);
+				setUserPermission(request.data.type);
 
-    const headers = {
-      'headers': {
-        'Authorization': `Bearer ${(parse.access_token)}`,
-      }
-    }
+				setToken('token', JSON.stringify({id, type, access_token}));
+				// navigate('/');
 
-    await api.get('/authenticate', headers)
-        .then((res) => {
-          setUserPermission(parse.type)
-          return true;
-        })
-        .catch((err) => {
-          localStorage.removeItem('token');
-          api.default.headers.Authorization = undefined;
-          return false;
-        });
-  }
+				return request;
+			}
+		} catch (err) {
+			console.error(err);
+		}
+	}
 
-  useEffect(() => {
-    (async () => {
-      const token = localStorage.getItem('token');
-      const parsed = JSON.parse(token);
-      console.log('------------------------1')
+	const validate = async () => {
+		const tokenHeaders = getTokenHeaders();
 
-      if (token) {
-        api.defaults.headers.Authorization = `Bearer ${(parsed.access_token)}`;
-        setUserInfo(parsed);
-        // console.log('parssed', parsed)
-        // setUserPermission(parsed.type)
-        console.log('passou aquiiiii')
+		await api.get('/authenticate', tokenHeaders)
+				.then((res) => {
+					setUserPermission(parse.type);
+					return true;
+				})
+				.catch((err) => {
+					removeToken();
+					return false;
+				});
+	};
 
-      }
-      if (parsed) setUserPermission(parsed.type);
+	useEffect(() => {
+		(async () => {
+			console.log('-------- reloading browser --------');
+			const tokenExists = await getTokenData();
 
-    })();
+			if (tokenExists) {
+				console.log('--- entra aqui no reload quando logado ---');
+				setUserInfo(tokenExists);
+			}
 
-  }, []);
+			if (tokenExists) setUserPermission(tokenExists.type);
 
-  return (
-      <AuthContext.Provider value={{  getUserPermission, getUserInfo, handleLogout, handleLogin }}>
-        {children}
-      </AuthContext.Provider>
-  );
-}
+		})();
+	}, []);
+
+	return (
+			<AuthContext.Provider value={{getUserPermission, getUserInfo, handleLogout, handleLogin}}>
+				{children}
+			</AuthContext.Provider>
+	);
+};

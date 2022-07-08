@@ -16,18 +16,18 @@ import { sendApiData } from "../../services/sendApiData";
 import { useNavigate } from "react-router-dom";
 
 const AdicionarVagasComponente = () => {
-  const _id = localStorage.getItem('token');
+  const _id = localStorage.getItem("token");
   const _idParsed = JSON.parse(_id);
 
   const navigate = useNavigate();
 
   const [userData, setUserData] = useState([]);
 
-  const [titulo, setTitulo] = useState('');
+  const [titulo, setTitulo] = useState("");
 
-  const [descricao, setDescricao] = useState('');
+  const [descricao, setDescricao] = useState("");
 
-  const [requisito, setRequisito] = useState('');
+  const [requisito, setRequisito] = useState("");
   const [pontuacao, setPontuacao] = useState(0);
 
   async function handleFetch() {
@@ -39,7 +39,7 @@ const AdicionarVagasComponente = () => {
       const request = await handleFetch();
       setUserData(request);
     })();
-    }, []
+  }, []
   );
 
   async function handleSubmit() {
@@ -63,65 +63,65 @@ const AdicionarVagasComponente = () => {
         ]
       }
 
-    }
-    await sendApiData(`vagas`, data);
-    navigate('/e/');
+    };
+    await sendApiData("vagas", data);
+    navigate("/e/");
   }
 
   return (
-      <>
-        <Box>
-          <h2>descricao</h2>
+    <>
+      <Box>
+        <h2>descricao</h2>
 
-          <InputSection>
-            <Label>nome</Label>
-            <Input
-                id="titulo"
-                name="titulo"
-                placeholder="titulo.."
-                onChange={(e) => setTitulo(e.target.value)}
-            />
-          </InputSection>
+        <InputSection>
+          <Label>nome</Label>
+          <Input
+            id="titulo"
+            name="titulo"
+            placeholder="titulo.."
+            onChange={(e) => setTitulo(e.target.value)}
+          />
+        </InputSection>
 
-          <InputSection>
-            <Label>descricao</Label>
-            <Input
-                id="descricao"
-                name="descricao"
-                placeholder="descricao.."
-                onChange={(e) => setDescricao(e.target.value)}
-            />
-          </InputSection>
-          <br/>
+        <InputSection>
+          <Label>descricao</Label>
+          <Input
+            id="descricao"
+            name="descricao"
+            placeholder="descricao.."
+            onChange={(e) => setDescricao(e.target.value)}
+          />
+        </InputSection>
+        <br/>
 
-          <h2>habilidades</h2>
+        <h2>habilidades</h2>
 
-          <InputSection>
-            <Label>requisito</Label>
-            <Input
-                id="requisito"
-                name="requisito"
-                placeholder="requisito.."
-                onChange={(e) => setRequisito(e.target.value)}
-            />
-          </InputSection>
-          <InputSection>
-            <Label>pontuacao</Label>
-            <Input
-                type="number"
-                id="pontuacao"
-                name="pontuacao"
-                placeholder="pontuacao.."
-                onChange={(e) => setPontuacao(e.target.value)}
-            />
-          </InputSection>
+        <InputSection>
+          <Label>requisito</Label>
+          <Input
+            id="requisito"
+            name="requisito"
+            placeholder="requisito.."
+            onChange={(e) => setRequisito(e.target.value)}
+          />
+        </InputSection>
+        <InputSection>
+          <Label>pontuacao</Label>
+          <Input
+            type="number"
+            id="pontuacao"
+            name="pontuacao"
+            placeholder="pontuacao.."
+            onChange={(e) => setPontuacao(e.target.value)}
+          />
+        </InputSection>
 
-          <Wrapper>
-            <Button onClick={handleSubmit}>update info</Button>
-          </Wrapper>
-        </Box>
-      </>
+        <Wrapper>
+          <Button onClick={handleSubmit}>update info</Button>
+        </Wrapper>
+      </Box>
+    </>
   );
-}
+};
 
 export default AdicionarVagasComponente;

@@ -1,6 +1,11 @@
-import React, {useContext, useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useLocation } from "react-router";
+
+import { AuthContext } from "../../auth/AuthContext";
+import { sendApiData } from "../../services/sendApiData";
+import { getApiData } from "../../services/getApiData";
+
 import {
   Box,
   Title,
@@ -8,18 +13,14 @@ import {
   Row
 } from "./styles";
 import { Button, Input, InputSection, Label, Wrapper } from "../../styles";
-import { sendApiData } from "../../services/sendApiData";
-import {AuthContext} from "../../auth/AuthContext";
-import fetchData from "../../services/fetchData";
-import {getApiData} from "../../services/getApiData";
 
 export const DetalhesVagas = (props) => {
 
   const { getUserInfo } = useContext(AuthContext);
 
-  console.log('user', getUserInfo);
+  console.log("user", getUserInfo);
 
-  const [userData, setUserInfo] = useState('');
+  const [userData, setUserInfo] = useState("");
 
   const { id } = useParams();
   const { state } = useLocation();
@@ -35,12 +36,12 @@ export const DetalhesVagas = (props) => {
   }
 
   useEffect(() => {
-        (async () => {
-          const request = await handleFetch();
-          console.log('user data', request);
-          setUserInfo(request);
-        })();
-      }, []
+    (async () => {
+      const request = await handleFetch();
+      console.log("user data", request);
+      setUserInfo(request);
+    })();
+  }, []
   );
 
   async function handleSubmit() {
@@ -60,65 +61,68 @@ export const DetalhesVagas = (props) => {
       habilidades: {
         pontuacao: [
           {
-            nome: 'javascript', pontuacao: 10
+            nome: "javascript", pontuacao: 10
           }
         ]
       }
-    }
-    await sendApiData(`respostas`, data);
-    navigate('/e/');
+    };
+    await sendApiData("respostas", data);
+    navigate("/c/");
   }
 
   return (
-      <Box>
-        <Title>{nome}</Title>
+    <Box>
+      <Title>{nome}</Title>
 
-        <RowSection>
-          <Row>
-            <div>
-              {empresa.nome}
+      <RowSection>
+        <Row>
+          <div>
+            {empresa.nome}
+          </div>
+        </Row>
+
+      </RowSection>
+      <Row>
+        <div>
+          {descricao}
+        </div>
+      </Row>
+      <Row>
+        <div>
+          {habilidades.requisitos.map((item, index) => (
+            <div key={`req_${index}`}>
+              <div>techs</div>
+              <div>{item.nome}</div>
             </div>
-          </Row>
-
-        </RowSection>
-        <Row>
-          <div>
-            {descricao}
-          </div>
-        </Row>
-        <Row>
-          <div>
-            {habilidades.requisitos.map((item, index) => (
-                <div key={`req_${index}`}>
-                  <div>techs</div>
-                  <div>{item.nome}</div>
-                </div>
-            ))}
-          </div>
-        </Row>
-        <Row>
-          <Button onClick={() => setVisibility(!visible)}>{visible === false ? 'candidatar' : 'fechar'}</Button>
-        </Row>
-        {visible && (
-            <Box>
-              {habilidades.requisitos.map((item, index) => (
-                  <InputSection key={`requisitos_${index}`}>
-                    <Label>{item.nome}</Label>
-                    <Input
-                        type="number"
-                        id={`candidato_pontuacao_${index}`}
-                        name={`candidato_pontuacao_${index}`}
-                        placeholder="pontuacao.."
-                        onChange={(e) => setRequisito(e.target.value)}
-                    />
-                  </InputSection>
-              ))}
-              <Wrapper>
-                <Button onClick={handleSubmit}>candidatar</Button>
-              </Wrapper>
-            </Box>
-        )}
-      </Box>
-  )
-}
+          ))}
+        </div>
+      </Row>
+      <Row>
+        <Button
+	        onClick={() => setVisibility(!visible)}>
+          {visible === false ? "candidatar" : "fechar"}
+        </Button>
+      </Row>
+      {visible && (
+        <Box>
+          {habilidades.requisitos.map((item, index) => (
+            <InputSection key={`requisitos_${index}`}>
+              <Label>{item.nome}</Label>
+              <Input
+                type="number"
+                id={`candidato_pontuacao_${index}`}
+                name={`candidato_pontuacao_${index}`}
+                placeholder="pontuacao.."
+                onChange={(e) => setRequisito(e.target.value)}
+              />
+            </InputSection>
+          ))}
+          <Wrapper>
+            <Button onClick={handleSubmit}>candidatar</Button>
+          </Wrapper>
+        </Box>
+      )}
+    </Box>
+  );
+};
 export default DetalhesVagas;

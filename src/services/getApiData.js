@@ -2,24 +2,24 @@ import api from "../config/api";
 
 export async function getApiData(url) {
   // const token = localStorage.getItem('token');
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   const parse = JSON.parse(token);
-  console.log('APIDATAREQUEST', parse)
+  console.log("APIDATAREQUEST", parse);
 
   const headers = {
-    'headers': {
-      'Authorization': `Bearer ${(parse.access_token)}`,
+    "headers": {
+      "Authorization": `Bearer ${(parse.access_token)}`,
     }
-  }
-  console.log('url', url)
+  };
+  console.log("url", url);
 
   const request = await api.get(
-      url,
-      headers)
-      .then(res => res)
-      .catch(er => er);
+    url,
+    headers)
+    .then(res => res)
+    .catch(er => er);
 
-  console.log('request - getapidata', request);
+  console.log("request - getapidata", request);
 
   return request.data;
 }

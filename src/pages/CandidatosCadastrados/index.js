@@ -8,17 +8,17 @@ const CandidatosCadastrados = () => {
   const [data, setData] = useState([]);
 
   async function handleFetch() {
-    const data = await getApiData('/candidatos');
+    const data = await getApiData("/candidatos");
     setData(data);
   }
 
   useEffect(() => {
-    handleFetch()
+    handleFetch();
   }, []);
 
   return (
-      <ComponenteCandidatos data={data} />
+    <ComponenteCandidatos data={data} />
   );
-}
+};
 
 export default CandidatosCadastrados;

@@ -8,17 +8,17 @@ const VagasCadastradas = () => {
   const [data, setData] = useState([]);
 
   async function handleFetch() {
-    const data = await getApiData('/vagas');
+    const data = await getApiData("/vagas");
     setData(data);
   }
 
   useEffect(() => {
-    handleFetch()
+    handleFetch();
   }, []);
 
   return (
-      <ComponenteVagas data={data} />
+    <ComponenteVagas data={data} />
   );
-}
+};
 
 export default VagasCadastradas;

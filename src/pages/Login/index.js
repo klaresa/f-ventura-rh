@@ -12,48 +12,51 @@ import {
 } from "../../styles";
 import { AuthContext } from "../../auth/AuthContext";
 
-const Login = ({ login }) => {
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
+const Login = () => {
+	const navigate = useNavigate();
 
-  const navigate = useNavigate();
-  const { handleLogout, getUserPermission, handleLogin } = useContext(AuthContext);
+	const { getUserInfo, getUserPermission, handleLogout, handleLogin } = useContext(AuthContext);
+
+	const [email, setEmail] = useState("");
+	const [senha, setSenha] = useState("");
 
   async function handleLoginData() {
     await handleLogin({ username: email, password: senha});
 
-    (login());
+	  console.log('getuserpermission-----------', getUserInfo);
+
+    navigate("/")
   }
 
   return (
-      <Overlay>
-        <Content>
-          <Box>
-            <Text>login</Text>
-            <InputSection>
-              <Label>email</Label>
-              <Input
-                  id="email"
-                  name="email"
-                  placeholder="email.."
-                  onChange={(e) => setEmail(e.target.value)}
-              />
-            </InputSection>
-            <InputSection>
-              <Label>senha</Label>
-              <Input
-                  id="senha"
-                  name="senha"
-                  placeholder="senha.."
-                  onChange={(e) => setSenha(e.target.value)}
-              />
-            </InputSection>
-            <Button onClick={handleLoginData}>Ir</Button>
-            <button onClick={handleLogout}>sair</button>
-          </Box>
-        </Content>
-      </Overlay>
+    <Overlay>
+      <Content>
+        <Box>
+          <Text>login</Text>
+          <InputSection>
+            <Label>email</Label>
+            <Input
+              id="email"
+              name="email"
+              placeholder="email.."
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </InputSection>
+          <InputSection>
+            <Label>senha</Label>
+            <Input
+              id="senha"
+              name="senha"
+              placeholder="senha.."
+              onChange={(e) => setSenha(e.target.value)}
+            />
+          </InputSection>
+          <Button onClick={handleLoginData}>Ir</Button>
+          <button onClick={handleLogout}>sair</button>
+        </Box>
+      </Content>
+    </Overlay>
   );
-}
+};
 
 export default Login;

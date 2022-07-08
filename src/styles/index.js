@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   height: 645px;
@@ -59,17 +59,18 @@ export const Overlay = styled.div`
 `;
 
 export const Content = styled.div`
-  height: 645px;
-  width: 380px;
-  position: absolute;
-  right: 50%;
-  top: 50%;
-  transform: translate(50%, -50%);
+	margin: 0 auto;
+  height: 100%;
+  //width: 380px;
+  //right: 50%;
+  //top: 50%;
+  //transform: translate(50%, -50%);
   background-color: white;
-  border: 2px solid gainsboro;
+  //border: 2px solid gainsboro;
 `;
 
 export const Box = styled.div`
+  height: 100%;
   gap: 20px;
   position: relative;
   display: flex;

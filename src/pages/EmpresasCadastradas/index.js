@@ -6,17 +6,17 @@ const EmpresasCadastradas = () => {
   const [data, setData] = useState([]);
 
   async function handleFetch() {
-    const data = await getApiData('/empresas');
+    const data = await getApiData("/empresas");
     setData(data);
   }
 
   useEffect(() => {
-    handleFetch()
+    handleFetch();
   }, []);
 
   return (
-      <ComponenteEmpresas data={data} />
+    <ComponenteEmpresas data={data} />
   );
-}
+};
 
 export default EmpresasCadastradas;

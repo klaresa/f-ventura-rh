@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  Overlay,
   Content,
   Box,
   Text,
@@ -22,24 +21,24 @@ const Index = () => {
   }, [authed]);
 
   function handleNav(instruction) {
-    if (instruction === 'entrar') {
-      navigate('/login');
+    if (instruction === "entrar") {
+      navigate("/login");
     }
-    if (instruction === 'cadastro') {
-      navigate('/cadastro');
+    if (instruction === "cadastro") {
+      navigate("/cadastro");
     }
   }
 
   return (
-      <Overlay>
-        <Content>
-          <Box>
-            <Button onClick={() => handleNav('entrar')}>Entrar</Button>
-            <Button onClick={() => handleNav('cadastro')}>Cadastrar</Button>
-          </Box>
-        </Content>
-      </Overlay>
+    // <Overlay>
+      <Content>
+        <Box>
+          <Button onClick={() => handleNav("entrar")}>Entrar</Button>
+          <Button onClick={() => handleNav("cadastro")}>Cadastrar</Button>
+        </Box>
+      </Content>
+    // </Overlay>
   );
-}
+};
 
 export default Index;
